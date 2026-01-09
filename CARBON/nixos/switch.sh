@@ -1,1 +1,1 @@
-../../etc/nixos-switch.sh
+../../.etc/nixos-switch.sh
