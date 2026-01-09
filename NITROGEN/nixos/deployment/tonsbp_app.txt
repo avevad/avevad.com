@@ -1,0 +1,1 @@
+ghcr.io/avevad/tonsbp-app/tonsbp-app@sha256:d3684425c4e7bcf7fa1850d1e6a994715f14ec1bd4646e42c2ff28ec4f19ef41

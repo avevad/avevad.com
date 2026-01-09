@@ -19,7 +19,7 @@ in
     hostName = "NITROGEN";
     domain = "avevad.com";
     fqdn = "nitrogen.avevad.com";
-    
+
     networkmanager.enable = true;
     firewall.enable = false;
   };
@@ -28,9 +28,17 @@ in
 
   programs.fish.enable = true;
 
+  users.groups.admin = {};
+  users.users.admin = {
+    isNormalUser = true;
+    group = "admin";
+    homeMode = "770";
+    extraGroups = [ "wheel" ];
+  };
+
   users.users.avevad = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ];
+    extraGroups = [ "wheel" "docker" "admin" ];
     shell = pkgs.fish;
     packages = with pkgs; [
       vim
@@ -69,7 +77,7 @@ in
         "${ pkgs.writeText "haproxy.pem" ENV.HAPROXY_CERT_TONSBP }"
         "${ pkgs.writeText "haproxy.pem" ENV.HAPROXY_CERT_PRO }"
         ENV.TOKENS.HAPROXY_DEPLOY
-      ] 
+      ]
       (builtins.readFile ./etc/haproxy.cfg)
     );
 
@@ -80,17 +88,30 @@ in
       no-resolv = true;
       no-hosts = true;
       log-queries = true;
-      address = [
+      auth-server = "nitrogen.avevad.com";
+      auth-zone = "avedus.pro";
+      host-record = [
         # Servers
-        "/nitrogen.avedus.pro/10.100.100.10"
-        "/helium.avedus.pro/10.100.100.20"
-        "/carbon.avedus.pro/10.10.10.10" # Also 10.100.100.30, but this address is preferred
-        
-        # Important clients
-        "/keenetic.avedus.pro/10.10.10.1"
-        "/netlink.avedus.pro/10.10.0.1"
+        "nitrogen.avedus.pro,10.100.100.10" "nitrogen.avedus.pro,10.100.0.1"
+        "helium.avedus.pro,10.100.100.20"
+        "carbon.avedus.pro,10.100.100.30" "carbon.avedus.pro,10.10.10.10"
+
+        # Important hosts
+        "netlink.avedus.pro,10.10.0.1"
+        "speedster.avedus.pro,10.10.10.1"
+        "actinium-ipmi.avedus.pro,10.10.10.101"
+        "actinium.avedus.pro,10.10.10.100"
+      ];
+      cname = [
+        # Service subdomains
+        "*.nitrogen.avedus.pro,nitrogen.avedus.pro"
+        "*.helium.avedus.pro,helium.avedus.pro"
+
+        # Service aliases
+        "balancer.avedus.pro,nitrogen.avedus.pro"
+        "cinema.avedus.pro,carbon.avedus.pro"
+        "proxmox.avedus.pro,balancer.avedus.pro"
       ];
     };
   };
 }
-
