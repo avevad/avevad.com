@@ -19,7 +19,7 @@ in
     description = "Deployment Service";
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${ pkgs.bash }/bin/bash ${ ./scripts/deploy.sh } %i";
+      ExecStart = "${ pkgs.bash }/bin/bash ${ ./deployment/deploy.sh } %i";
       WorkingDirectory = "/etc/nixos/deployment/";
       StandardInput = "socket";
       StandardOutput = "socket";
