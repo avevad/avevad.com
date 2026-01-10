@@ -8,8 +8,7 @@ in
   system.stateVersion = "25.05";
 
   imports = [
-    /etc/nixos/hardware-configuration.nix
-    /etc/nixos/hardware-configuration-extras.nix
+    ./hardware.nix
     ./systemd.nix
     ./wireguard.nix
     ./containers.nix
