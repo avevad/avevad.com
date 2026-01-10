@@ -7,10 +7,5 @@
     PUSHY_DOCS_REV = builtins.readFile ./deployment/refs/pushy_docs.txt;
   };
 
-  HAPROXY_CERT = builtins.readFile ./secrets/haproxy.pem;
-  HAPROXY_CERT_PUSHY = builtins.readFile ./secrets/haproxy_pushy.pem;
-  HAPROXY_CERT_TONSBP = builtins.readFile ./secrets/haproxy_tonsbp.pem;
-  HAPROXY_CERT_PRO = builtins.readFile ./secrets/haproxy_pro.pem;
-
   TOKENS = import ./secrets/tokens.nix;
 }
