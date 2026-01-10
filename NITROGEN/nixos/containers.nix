@@ -64,9 +64,9 @@ in
       ports = [ "127.0.0.1:8808:80" ];
       volumes = [ "/mnt/state/vaultwarden:/data" ];
       environment = {
-        TZ = "Europe/Moscow";
-        LOG_LEVEL = "error";
-        EXTENDED_LOGGING = "true";
+        TZ="Europe/Moscow";
+        LOG_LEVEL="error";
+        EXTENDED_LOGGING="true";
       };
     };
 
@@ -81,8 +81,8 @@ in
         "--enable-feature=exemplar-storage"
       ];
       volumes = [
-        "${./etc/prometheus.yml}:/etc/prometheus/prometheus.yml:ro"
-        "${./etc/prometheus.rules.yml}:/etc/prometheus/rules.yml:ro"
+        "${./metrics/prometheus.yml}:/etc/prometheus/prometheus.yml:ro"
+        "${./metrics/prometheus.rules.yml}:/etc/prometheus/rules.yml:ro"
         "/mnt/state/prometheus:/prometheus"
       ];
       environment = {
@@ -99,7 +99,7 @@ in
         [
           ENV.TOKENS.PUSHY_DEV_TEAM_ALERTS_URL
         ]
-        (builtins.readFile ./etc/alertmanager.yml)
+        (builtins.readFile ./metrics/alertmanager.yml)
       );
     in {
       image = "prom/alertmanager";
