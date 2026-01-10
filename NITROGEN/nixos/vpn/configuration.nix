@@ -89,9 +89,10 @@
         # Service subdomains
         "*.nitrogen.avedus.pro,nitrogen.avedus.pro"
         "*.helium.avedus.pro,helium.avedus.pro"
-        # Service aliases
+        # Proxy aliases
         "passwords.at.avedus.pro,nitrogen.avedus.pro"
         "metrics.at.avedus.pro,nitrogen.avedus.pro"
+        "proxmox-ac.at.avedus.pro,nitrogen.avedus.pro"
       ];
     };
   };
