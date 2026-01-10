@@ -12,6 +12,7 @@ in
     ./systemd.nix
     ./containers.nix
     ./vpn/configuration.nix
+    ./balancer/configuration.nix
   ];
 
   networking = {
@@ -26,14 +27,6 @@ in
   time.timeZone = "Europe/Moscow";
 
   programs.fish.enable = true;
-
-  users.groups.admin = {};
-  users.users.admin = {
-    isNormalUser = true;
-    group = "admin";
-    homeMode = "770";
-    extraGroups = [ "wheel" ];
-  };
 
   users.users.avevad = {
     isNormalUser = true;
@@ -60,25 +53,6 @@ in
       PasswordAuthentication = false;
       PermitRootLogin = "no";
     };
-
-    haproxy.enable = true;
-    haproxy.config = (builtins.replaceStrings
-      [
-        "@CERT_FILE@"
-        "@CERT_FILE_PUSHY@"
-        "@CERT_FILE_TONSBP@"
-        "@CERT_FILE_PRO@"
-        "@DEPLOY_TOKEN@"
-      ]
-      [
-        "${ pkgs.writeText "haproxy.pem" ENV.HAPROXY_CERT }"
-        "${ pkgs.writeText "haproxy.pem" ENV.HAPROXY_CERT_PUSHY }"
-        "${ pkgs.writeText "haproxy.pem" ENV.HAPROXY_CERT_TONSBP }"
-        "${ pkgs.writeText "haproxy.pem" ENV.HAPROXY_CERT_PRO }"
-        ENV.TOKENS.HAPROXY_DEPLOY
-      ]
-      (builtins.readFile ./etc/haproxy.cfg)
-    );
 
     dnsmasq.enable = true;
     dnsmasq.resolveLocalQueries = false;
