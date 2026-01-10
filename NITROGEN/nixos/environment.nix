@@ -7,5 +7,5 @@
     PUSHY_DOCS_REV = builtins.readFile ./deployment/refs/pushy_docs.txt;
   };
 
-  TOKENS = import ./secrets/tokens.nix;
+  TOKENS = import ./tokens.nix;
 }
