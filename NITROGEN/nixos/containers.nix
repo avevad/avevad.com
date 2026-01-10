@@ -25,17 +25,6 @@ in
       extraOptions = [ "--network=pushy" "--ip=192.168.1.101" ];
     };
 
-    tonsbp-postgres = {
-      image = "postgres:16";
-      volumes = [ "/mnt/state/tonsbp/postgres:/var/lib/postgresql/data/pgdata" ];
-      cmd = [ "-c" "log_checkpoints=false" ];
-      environment = {
-        POSTGRES_PASSWORD = "password";
-        PGDATA = "/var/lib/postgresql/data/pgdata";
-      };
-      extraOptions = [ "--network=tonsbp" "--ip=192.168.2.101" ];
-    };
-
     pushy-tgbot = {
       image = ENV.DEPLOY.PUSHY_REV;
       login = ghcrAuth;
@@ -68,31 +57,6 @@ in
       image = ENV.DEPLOY.PUSHY_DOCS_REV;
       login = ghcrAuth;
       ports = [ "127.0.0.1:8888:80" ];
-    };
-
-    tonsbp-server = {
-      image = ENV.DEPLOY.TONSBP_SERVER_REV;
-      login = ghcrAuth;
-      ports = [ "127.0.0.1:8100:8000" ];
-      extraOptions = [ "--dns=10.100.0.1" "--network=tonsbp" ];
-      environment = {
-        TONSBP_VERSION_SUFFIX="";
-        TONSBP_PUSHY_API_KEY=ENV.TOKENS.TONSBP_PUSHY_API_KEY;
-        TONSBP_PUSHY_WEBHOOK_ADMIN_KEY=ENV.TOKENS.TONSBP_PUSHY_WEBHOOK_ADMIN_KEY;
-        TONSBP_WALLET_MAINNET="1";
-        TONSBP_WALLET_MNEMONIC=ENV.TOKENS.TONSBP_WALLET_MNEMONIC;
-        TONSBP_WALLET_ID=ENV.TOKENS.TONSBP_WALLET_ID;
-        TONSBP_TONAPI_KEY=ENV.TOKENS.TONSBP_TONAPI_KEY;
-        TONSBP_TONCENTER_KEY=ENV.TOKENS.TONSBP_TONCENTER_KEY;
-        TONSBP_DB_URL="postgresql+psycopg2://postgres:password@192.168.2.101/tonsbp";
-        TONSBP_CENTRAL_WEBHOOK_URL="https://tonsbp-central-api.helium.avevad.com/v1/payment?admin_key=${ ENV.TOKENS.TONSBP_PUSHY_WEBHOOK_ADMIN_KEY }";
-      };
-    };
-
-    tonsbp-app = {
-      image = ENV.DEPLOY.TONSBP_APP_REV;
-      login = ghcrAuth;
-      ports = [ "127.0.0.1:8337:80" ];
     };
 
     passmgr-vaultwarden = {
