@@ -11,7 +11,7 @@
     publicKey = "8ukfO7G7MdNkg4pYJO2JK+Okzrj8tAkfnGPupmP2jGw=";
     allowedIPs = [ "10.100.0.4/32" ];
   }
-  { # KEENETIC_PUB
+  { # SPEEDSTER
     publicKey = "SFS6NP/mC5gYfNLPTSwWn9O4G/yhnOOPQmjkDQzjISc=";
     allowedIPs = [ "10.100.0.7/32" ];
   }

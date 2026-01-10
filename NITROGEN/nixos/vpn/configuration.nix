@@ -63,5 +63,37 @@
       };
     };
   };
+
+  services.dnsmasq = {
+    enable = true;
+    resolveLocalQueries = false;
+    settings = {
+      server = [ "1.1.1.1" "1.0.0.1" ];
+      no-resolv = true;
+      no-hosts = true;
+      log-queries = true;
+      auth-server = "nitrogen.avevad.com";
+      auth-zone = "avedus.pro";
+      host-record = [
+        # Servers
+        "nitrogen.avedus.pro,10.100.100.10" "nitrogen.avedus.pro,10.100.0.1"
+        "helium.avedus.pro,10.100.100.20"
+        "carbon.avedus.pro,10.100.100.30" "carbon.avedus.pro,10.10.10.10"
+        # Important hosts
+        "netlink.avedus.pro,10.10.0.1"
+        "speedster.avedus.pro,10.10.10.1"
+        "actinium-ipmi.avedus.pro,10.10.10.101"
+        "actinium.avedus.pro,10.10.10.100"
+      ];
+      cname = [
+        # Service subdomains
+        "*.nitrogen.avedus.pro,nitrogen.avedus.pro"
+        "*.helium.avedus.pro,helium.avedus.pro"
+        # Service aliases
+        "passwords.at.avedus.pro,nitrogen.avedus.pro"
+        "metrics.at.avedus.pro,nitrogen.avedus.pro"
+      ];
+    };
+  };
 }
 
